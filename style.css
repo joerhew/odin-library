@@ -1,0 +1,55 @@
+:root {
+    --primary: rgb(146, 173, 148,1);
+    --secondary: rgb(142, 59, 70,1);
+    --tertiary: rgb(157, 105, 22,1);
+    --quatenary: rgb(80, 61, 66,1);
+    --primary-dark: rgb(73, 91, 74);
+    --dark: rgb(9, 8, 33,1);
+    --light: rgb(245, 251, 239,1);
+
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+}
+
+button {
+    height: 2rem;
+    width: 10rem;
+    outline: none;
+    border: none;
+    margin-bottom: 1.5rem; 
+    background-color: var(--primary);
+    color: var(--dark);
+    cursor: pointer;
+}
+
+.container {
+    width: min(90%,1000px);
+}
+
+.page-title {
+    align-self: flex-start;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+.library {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) ;
+    background-color: var(--light);
+    width: 90%;
+}
+
+.book {
+    background-color: var(--tertiary);
+    color: var(--light);
+    padding: 5px;
+    margin: 5px;
+}
