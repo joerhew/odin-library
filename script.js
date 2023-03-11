@@ -67,7 +67,7 @@ function displayLibrary() {
         DIV_BTNS.appendChild(DEL_BTN);
         DIV_BTNS.appendChild(READ_BTN);
     }
-
+    // Defining the delete buttons after the books have been dynamically created
     deleteBookBtns = document.querySelectorAll('.btn-delete-book');     
 }
 
@@ -95,6 +95,7 @@ window.addEventListener("load", (event) => {
 
   });
 
+// The event listeners are not firing, even though in console I can see that deleteBookBtns are correctly defined
 deleteBookBtns.forEach(el =>
     el.addEventListener('click', (e) => {
         deleteBook(e);
