@@ -4,6 +4,7 @@ const BODY = document.querySelector('body');
 const LIBRARY_CONTAINER = document.querySelector('.library');
 const SHOW_FORM_BTN = document.querySelector('#btn-show-form');
 const ADD_BOOK_BTN =  document.querySelector('#btn-add-book');
+const CANCEL_BTN = document.querySelector('#btn-cancel');
 const ADD_BOOK_FORM = document.querySelector('form[name="add-book-form"');
 const ADD_BOOK_FORM_CONTAINER = document.querySelector('.form-container');
 
@@ -21,6 +22,10 @@ ADD_BOOK_BTN.addEventListener('click', () => {
     validateForm();    
 })
 
+CANCEL_BTN.addEventListener('click', () => {
+    ADD_BOOK_FORM_CONTAINER.classList.toggle('hidden');
+})
+
 // Book constructor and prototype method
 
 function Book(title, author, pages, read) {
@@ -32,7 +37,7 @@ function Book(title, author, pages, read) {
 
 Book.prototype.toggleRead = function() {
     this.read = this.read === true ? false : true;
-    
+
     displayLibrary();
 }
 
@@ -51,8 +56,7 @@ function validateForm() {
         
         addBookToLibrary(newBook);
         ADD_BOOK_FORM.reset();
-    };
-    
+    };   
 }
 
 function addBookToLibrary(book) {
@@ -89,10 +93,11 @@ function displayLibrary() {
         bookCard.innerText = library[i].title;
         bookAuthor.innerText = library[i].author;
         bookPages.innerText = library[i].pages;
-        bookRead.innerText = library[i].read;
+        bookRead.innerText = library[i].read ? 'Read' : 'Unread';
 
         btnDelete.innerText = 'Delete';
-        btnRead.innerText = 'Mark read/unread';
+        btnRead.innerText = library[i].read ? 'Mark as unread' : 'Mark as read'
+
 
         LIBRARY_CONTAINER.appendChild(bookCard);
         bookCard.appendChild(bookTitle);

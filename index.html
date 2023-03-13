@@ -10,7 +10,7 @@
     <script src="script.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Sono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,600;0,700;1,400&family=Sono:wght@400;600&display=swap" rel="stylesheet">
 
     <title>My Library</title>
 </head>
@@ -28,23 +28,26 @@
                 </div>
                 <div class="form-row">
                     <div class="input-label">
-                        <label for="new-book-title">Book Author:</label>
+                        <label for="new-book-author">Book Author:</label>
                     </div>
                     <input type="text" name="new-book-author" id="new-book-author" required />
                 </div>
                 <div class="form-row">
                     <div class="input-label">
-                        <label for="new-book-title">Number of Pages:</label>
+                        <label for="new-book-pages">Number of Pages:</label>
                     </div>
                     <input type="number" name="new-book-pages" id="new-book-pages" min="1" required />
                 </div>
                 <div class="form-row">
                     <div class="input-label">
-                        <label for="new-book-title">Read:</label>
+                        <label for="new-book-read">Read:</label>
                     </div>
-                    <input type="checkbox" name="new-book-read" id="new-book-read" value="yes"/><p>Yes, I have read the book.</p>
+                    <input type="checkbox" name="new-book-read" id="new-book-read" value="yes"/>
+                    <span class="checkmark"></span>
+                    <p>Yes, I have read the book.</p>
                 </div>
                 <button type="button" id="btn-add-book">Add</button>
+                <button type="button" id="btn-cancel">Cancel</button>
             </form>
         </div>
         <div class="library">

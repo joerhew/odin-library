@@ -1,13 +1,14 @@
 :root {
-    --primary: rgb(146, 173, 148,1);
-    --secondary: rgb(142, 59, 70,1);
-    --tertiary: rgb(157, 105, 22,1);
-    --quatenary: rgb(80, 61, 66,1);
-    --primary-dark: rgb(73, 91, 74);
-    --dark: rgb(9, 8, 33,1);
-    --light: rgb(245, 251, 239,1);
+    --primary: rgb(215, 65, 167, 1);
+    --secondary: rgb(58, 23, 114, 1);
+    --tertiary: rgb(222, 165, 75, 1);
+    --primary-dark: rgb(118, 25, 88, 1);
+    --dark: rgb(9, 8, 33, 1);
+    --light: rgb(240, 246, 249, 1);
+    --white: rgb(250,250,250,1);
+    --neutral: rgb(203, 203, 203);
 
-    --text: 'Lora', serif;
+    --text: 'Raleway', serif;
     --heading: 'Sono', sans-serif;
 
 }
@@ -28,7 +29,7 @@ button {
     outline: none;
     border: none;
     background-color: var(--primary);
-    color: var(--dark);
+    color: var(--white);
     cursor: pointer;
     
     font-family: var(--heading);
@@ -37,18 +38,29 @@ button {
     text-transform: uppercase;
 }
 
+button[id='btn-cancel'] {
+    background-color: var(--neutral);
+    color: var(--dark);
+}
+
 input {
     height: 1.5rem;
     outline: none;
-    border: 2px solid var(--quatenary);
+    border: 2px solid var(--tertiary);
     padding: 0 0.5rem 0 0.5rem;
     font-family: var(--text);
-    color: var(--quatenary);
+    color: var(--secondary);
 }
 
+input[type='checkbox'] {
+    accent-color: var(--tertiary);
+    height: 14px;
+}
 
 .container {
     width: min(90%,1000px);
+    display: flex;
+    flex-direction: column;
 }
 
 .page-title {
@@ -56,25 +68,28 @@ input {
 }
 
 .form-container {
-    border: 2px solid var(--dark);
+    border: 2px solid var(--tertiary);
     padding: 1rem;
     margin: 1.5rem 0 1.5rem 0;
 }
 
 .form-row {
     display: flex;
+    align-items: flex-start;
     margin-bottom: 1rem;
 }
 
 .form-row p {
     display:inline;
     margin: 0 0 0 0.5rem;
+    color: var(--secondary);
 }
 
 .input-label {
     width: 20%;
     text-align: right;
     margin-right: 1rem;
+    color: var(--secondary);
 }
 
 .hidden {
@@ -86,12 +101,23 @@ input {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) ;
     background-color: var(--light);
-    width: 90%;
 }
 
 .book {
-    background-color: var(--tertiary);
+    background-color: var(--secondary);
     color: var(--light);
-    padding: 5px;
-    margin: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.book button {
+    width: 100%;
+    
+
+    background-color: var(--tertiary);
+    font-size: 0.9rem;
+}
+
+.book button:first-of-type {
+    margin-bottom: 10px;
 }
