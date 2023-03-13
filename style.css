@@ -7,6 +7,9 @@
     --dark: rgb(9, 8, 33,1);
     --light: rgb(245, 251, 239,1);
 
+    --text: 'Lora', serif;
+    --heading: 'Sono', sans-serif;
+
 }
 
 body {
@@ -14,6 +17,9 @@ body {
     flex-direction: column;
     align-items: center;
     border-radius: 8px;
+    
+    font-family: var(--text);
+    font-weight: 400;
 }
 
 button {
@@ -21,11 +27,25 @@ button {
     width: 10rem;
     outline: none;
     border: none;
-    margin-bottom: 1.5rem; 
     background-color: var(--primary);
     color: var(--dark);
     cursor: pointer;
+    
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
 }
+
+input {
+    height: 1.5rem;
+    outline: none;
+    border: 2px solid var(--quatenary);
+    padding: 0 0.5rem 0 0.5rem;
+    font-family: var(--text);
+    color: var(--quatenary);
+}
+
 
 .container {
     width: min(90%,1000px);
@@ -33,6 +53,28 @@ button {
 
 .page-title {
     align-self: flex-start;
+}
+
+.form-container {
+    border: 2px solid var(--dark);
+    padding: 1rem;
+    margin: 1.5rem 0 1.5rem 0;
+}
+
+.form-row {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.form-row p {
+    display:inline;
+    margin: 0 0 0 0.5rem;
+}
+
+.input-label {
+    width: 20%;
+    text-align: right;
+    margin-right: 1rem;
 }
 
 .hidden {

@@ -1,103 +1,139 @@
-const LIBRARY = document.querySelector('.library');
-const ADD_BOOK_BTN = document.querySelector('#btn-add-book');
-const ADD_BOOK_FORM = document.querySelector('form[name="add-book-form"');
+// constants and variables
 
-let myLibrary = [];
-let deleteBookBtns = [];
+const BODY = document.querySelector('body');
+const LIBRARY_CONTAINER = document.querySelector('.library');
+const SHOW_FORM_BTN = document.querySelector('#btn-show-form');
+const ADD_BOOK_BTN =  document.querySelector('#btn-add-book');
+const ADD_BOOK_FORM = document.querySelector('form[name="add-book-form"');
+const ADD_BOOK_FORM_CONTAINER = document.querySelector('.form-container');
+
+const ERROR_FORM_NOT_FILLED = 'Please fill out all required fields.';
+
+let library = [];
+
+// event listeners
+
+SHOW_FORM_BTN.addEventListener('click', () => {
+    ADD_BOOK_FORM_CONTAINER.classList.toggle('hidden');
+})
 
 ADD_BOOK_BTN.addEventListener('click', () => {
-    ADD_BOOK_FORM.classList.toggle('hidden');
+    validateForm();    
 })
+
+// Book constructor and prototype method
 
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        return `${title} by ${author}, ${pages} pages, ${read}`;
-    }
+}
+
+Book.prototype.toggleRead = function() {
+    this.read = this.read === true ? false : true;
+    
+    displayLibrary();
+}
+
+// functions
+
+function validateForm() {
+    const newBookTitle = document.querySelector('#new-book-title').value;
+    const newBookAuthor = document.querySelector('#new-book-author').value;
+    const newBookPages = document.querySelector('#new-book-pages').value;
+    const newBookRead = document.querySelector('#new-book-read').checked;
+
+    if (newBookTitle === '' || newBookAuthor === '' || newBookPages === '') {
+        alert(ERROR_FORM_NOT_FILLED);
+    } else {
+        const newBook = new Book(newBookTitle,newBookAuthor,newBookPages,newBookRead);
+        
+        addBookToLibrary(newBook);
+        ADD_BOOK_FORM.reset();
+    };
+    
 }
 
 function addBookToLibrary(book) {
-    myLibrary.push(book);
+    library.push(book);
+    displayLibrary(library);
 }
 
 function displayLibrary() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        const DISPLAY_BOOK = document.createElement("div");
-        const DISPLAY_TITLE = document.createElement("h2");
-        const DISPLAY_AUTHOR = document.createElement("p");
-        const DISPLAY_PAGES = document.createElement("p");
-        const DISPLAY_READ = document.createElement("p");
-        
-        const DIV_BTNS = document.createElement("div");
-        const DEL_BTN = document.createElement("button");
-        const READ_BTN = document.createElement("button");
+    refreshLibrary();
 
-        DISPLAY_BOOK.classList.add('book');
-        DISPLAY_BOOK.id = `book-${i}`
-        
-        DISPLAY_TITLE.classList.add('book-title');
-        DISPLAY_AUTHOR.classList.add('book-author');
-        DISPLAY_PAGES.classList.add('book-pages');
-        DISPLAY_READ.classList.add('book-read');
-        
-        DIV_BTNS.classList.add('edit-btns');
-        DEL_BTN.classList.add('btn-delete-book');
-        READ_BTN.classList.add('btn-toggle-read');
-        DEL_BTN.dataset.name = myLibrary[i].title;
-        READ_BTN.dataset.name = myLibrary[i].title;
+    for (let i = 0; i < library.length; i++) {
+        let bookCard = document.createElement("div");
+        let bookTitle = document.createElement("h2");
+        let bookAuthor = document.createElement("p");
+        let bookPages = document.createElement("p");
+        let bookRead = document.createElement("p");
+        let bookButtonContainer = document.createElement("div");
+        let btnDelete = document.createElement("button");
+        let btnRead = document.createElement("button");
 
-        DISPLAY_BOOK.innerText = myLibrary[i].title;
-        DISPLAY_AUTHOR.innerText = myLibrary[i].author;
-        DISPLAY_PAGES.innerText = myLibrary[i].pages;
-        DISPLAY_READ.innerText = myLibrary[i].read;
-
-        DEL_BTN.innerText = 'Delete';
-        READ_BTN.innerText = 'Mark read/unread';
-
-        LIBRARY.appendChild(DISPLAY_BOOK);
-        DISPLAY_BOOK.appendChild(DISPLAY_TITLE);
-        DISPLAY_BOOK.appendChild(DISPLAY_AUTHOR);
-        DISPLAY_BOOK.appendChild(DISPLAY_PAGES);
-        DISPLAY_BOOK.appendChild(DISPLAY_READ);
+        bookCard.classList.add('book');
         
-        DISPLAY_BOOK.appendChild(DIV_BTNS);
-        DIV_BTNS.appendChild(DEL_BTN);
-        DIV_BTNS.appendChild(READ_BTN);
+        bookTitle.classList.add('book-title');
+        bookAuthor.classList.add('book-author');
+        bookPages.classList.add('book-pages');
+        bookRead.classList.add('book-read');
+        
+        bookButtonContainer.classList.add('edit-btns');
+        btnDelete.classList.add('btn-delete-book');
+        btnRead.classList.add('btn-toggle-read');
+        btnDelete.dataset.name = library[i].title;
+        btnRead.dataset.name = library[i].title;
+
+        bookCard.innerText = library[i].title;
+        bookAuthor.innerText = library[i].author;
+        bookPages.innerText = library[i].pages;
+        bookRead.innerText = library[i].read;
+
+        btnDelete.innerText = 'Delete';
+        btnRead.innerText = 'Mark read/unread';
+
+        LIBRARY_CONTAINER.appendChild(bookCard);
+        bookCard.appendChild(bookTitle);
+        bookCard.appendChild(bookAuthor);
+        bookCard.appendChild(bookPages);
+        bookCard.appendChild(bookRead);
+        
+        bookCard.appendChild(bookButtonContainer);
+        bookButtonContainer.appendChild(btnDelete);
+        bookButtonContainer.appendChild(btnRead);
     }
-    // Defining the delete buttons after the books have been dynamically created
-    deleteBookBtns = document.querySelectorAll('.btn-delete-book');     
+    let deleteBookBtns = document.querySelectorAll('.btn-delete-book');
+    let toggleReadBtns = document.querySelectorAll('.btn-toggle-read');
+
+    deleteBookBtns.forEach(el =>
+        el.addEventListener('click', (e) => {
+            deleteBook(e); 
+        })
+    )
+
+    toggleReadBtns.forEach(el =>
+        el.addEventListener('click', (e) => {
+            let titleOfBookToToggle = e.target.dataset["name"];
+            let bookToToggle = library.find(book => book.title === titleOfBookToToggle);
+            bookToToggle.toggleRead(); 
+        })
+    )
 }
 
 function refreshLibrary() {
-    LIBRARY.innerHTML = "";
-    displayLibrary();
+    LIBRARY_CONTAINER.innerHTML = "";
 }
 
 function deleteBook(e) {
     let titleToDelete = e.target.dataset["name"];
-    let indexOfBookToDelete = myLibrary.findIndex(book => book.title === titleToDelete);
+    let indexOfBookToDelete = library.findIndex(book => book.title === titleToDelete);
 
-    myLibrary.splice(indexOfBookToDelete,1);
-    refreshLibrary();
+    library.splice(indexOfBookToDelete,1);
+    displayLibrary();
 }
 
-window.addEventListener("load", (event) => {
-    let bookOne = new Book("Designing Your Life","Dave Burnett",256,"Not Read");
-    let bookTwo = new Book("Atomic Habits","James Clear",312,"Read");
-
-    addBookToLibrary(bookOne);
-    addBookToLibrary(bookTwo);
-
+window.addEventListener("load", () => {
     displayLibrary();
-
   });
-
-// The event listeners are not firing, even though in console I can see that deleteBookBtns are correctly defined
-deleteBookBtns.forEach(el =>
-    el.addEventListener('click', (e) => {
-        deleteBook(e);
-    })
-)
