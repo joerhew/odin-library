@@ -26,19 +26,18 @@ CANCEL_BTN.addEventListener('click', () => {
     ADD_BOOK_FORM_CONTAINER.classList.toggle('hidden');
 })
 
-// Book constructor and prototype method
+// Book class
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-
-Book.prototype.toggleRead = function() {
-    this.read = this.read === true ? false : true;
-
-    displayLibrary();
+    toggleRead() {
+        this.read = this.read === true ? false : true;
+    }
 }
 
 // functions
@@ -65,7 +64,6 @@ function addBookToLibrary(book) {
 }
 
 function displayLibrary() {
-    refreshLibrary();
 
     for (let i = 0; i < library.length; i++) {
         let bookCard = document.createElement("div");
@@ -115,6 +113,8 @@ function displayLibrary() {
     deleteBookBtns.forEach(el =>
         el.addEventListener('click', (e) => {
             deleteBook(e); 
+            refreshLibrary();
+            displayLibrary();
         })
     )
 
@@ -123,6 +123,8 @@ function displayLibrary() {
             let titleOfBookToToggle = e.target.dataset["name"];
             let bookToToggle = library.find(book => book.title === titleOfBookToToggle);
             bookToToggle.toggleRead(); 
+            refreshLibrary();
+            displayLibrary();
         })
     )
 }
